@@ -3,6 +3,7 @@ package com.github.kotlintelegrambot.dispatcher.handlers
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.entities.CallbackQuery
 import com.github.kotlintelegrambot.entities.Update
+import java.util.*
 
 data class CallbackQueryHandlerEnvironment(
     val bot: Bot,
@@ -24,7 +25,7 @@ internal class CallbackQueryHandler(
         return when {
             data == null -> false
             callbackData == null -> true
-            else -> data.toLowerCase().contains(callbackData.toLowerCase())
+            else -> data.lowercase(Locale.getDefault()).contains(callbackData.lowercase(Locale.getDefault()))
         }
     }
 

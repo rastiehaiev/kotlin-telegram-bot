@@ -2,17 +2,16 @@ buildscript {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
+    }
 }
 
-plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.4.21"
-}
 
 allprojects {
-    apply from: "$rootDir/ktlint.gradle"
+    apply plugin: "org.jetbrains.kotlin.jvm"
 
     group 'com.github.kotlintelegrambot'
-    version '0.3.4'
 
     repositories {
         mavenCentral()

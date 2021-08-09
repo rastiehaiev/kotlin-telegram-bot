@@ -1,16 +1,8 @@
 package com.github.kotlintelegrambot.network.apiclient
 
-import com.github.kotlintelegrambot.entities.Chat
-import com.github.kotlintelegrambot.entities.ChatId
-import com.github.kotlintelegrambot.entities.Message
-import com.github.kotlintelegrambot.entities.TelegramFile
-import com.github.kotlintelegrambot.entities.User
+import com.github.kotlintelegrambot.entities.*
 import com.github.kotlintelegrambot.entities.files.Document
-import com.github.kotlintelegrambot.entities.inputmedia.InputMediaAudio
-import com.github.kotlintelegrambot.entities.inputmedia.InputMediaDocument
-import com.github.kotlintelegrambot.entities.inputmedia.MediaGroup
-import com.github.kotlintelegrambot.entities.inputmedia.anyInputMediaPhoto
-import com.github.kotlintelegrambot.entities.inputmedia.anyInputMediaVideo
+import com.github.kotlintelegrambot.entities.inputmedia.*
 import com.github.kotlintelegrambot.testutils.getFileAsStringFromResources
 import com.github.kotlintelegrambot.testutils.getFileFromResources
 import com.github.kotlintelegrambot.testutils.multipartBoundary

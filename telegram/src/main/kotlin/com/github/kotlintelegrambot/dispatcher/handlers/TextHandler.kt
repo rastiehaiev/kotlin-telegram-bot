@@ -3,23 +3,25 @@ package com.github.kotlintelegrambot.dispatcher.handlers
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.entities.Message
 import com.github.kotlintelegrambot.entities.Update
+import java.util.*
 
 data class TextHandlerEnvironment(
     val bot: Bot,
     val update: Update,
     val message: Message,
-    val text: String
+    val text: String,
 )
 
 internal class TextHandler(
     private val text: String? = null,
-    private val handleText: HandleText
+    private val handleText: HandleText,
 ) : Handler {
 
     override fun checkUpdate(update: Update): Boolean {
         if (update.message?.text != null && text == null) return true
         else if (text != null) {
-            return (update.message?.text != null && update.message.text.toLowerCase().contains(text.toLowerCase()))
+            return update.message?.text != null
+                && update.message.text.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))
         }
         return false
     }

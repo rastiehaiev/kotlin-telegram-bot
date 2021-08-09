@@ -1,6 +1,7 @@
 package com.github.kotlintelegrambot.entities.inputmedia
 
 import com.github.kotlintelegrambot.entities.TelegramFile
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -39,7 +40,7 @@ class MediaGroup private constructor(val medias: Array<out GroupableMedia>) {
 data class InputMediaPhoto(
     @SerializedName(InputMediaFields.MEDIA) override val media: TelegramFile,
     @SerializedName(InputMediaFields.CAPTION) override val caption: String? = null,
-    @SerializedName(InputMediaFields.PARSE_MODE) override val parseMode: String? = null
+    @SerializedName(InputMediaFields.PARSE_MODE) override val parseMode: String? = null,
 ) : InputMedia(), GroupableMedia {
     override val type: String
         get() = InputMediaTypes.PHOTO
@@ -57,8 +58,19 @@ data class InputMediaVideo(
     @SerializedName(InputMediaFields.WIDTH) val width: Int? = null,
     @SerializedName(InputMediaFields.HEIGHT) val height: Int? = null,
     @SerializedName(InputMediaFields.DURATION) val duration: Int? = null,
-    @SerializedName(InputMediaFields.SUPPORTS_STREAMING) val supportsStreaming: Boolean? = null
+    @SerializedName(InputMediaFields.SUPPORTS_STREAMING) val supportsStreaming: Boolean? = null,
 ) : InputMedia(), GroupableMedia {
+
+    override fun toString(): String {
+        return JsonObject().also {
+            val media = this.media
+            val fileId = media as? TelegramFile.ByFileId
+            val fileUrl = media as? TelegramFile.ByUrl
+            it.addProperty("media", fileId?.fileId ?: fileUrl?.url ?: "")
+            it.addProperty("type", type)
+        }.toString()
+    }
+
     override val type: String
         get() = InputMediaTypes.VIDEO
 }
@@ -74,7 +86,7 @@ data class InputMediaAnimation(
     @SerializedName(InputMediaFields.THUMB) val thumb: TelegramFile.ByFile? = null,
     @SerializedName(InputMediaFields.WIDTH) val width: Int? = null,
     @SerializedName(InputMediaFields.HEIGHT) val height: Int? = null,
-    @SerializedName(InputMediaFields.DURATION) val duration: Int? = null
+    @SerializedName(InputMediaFields.DURATION) val duration: Int? = null,
 ) : InputMedia() {
     override val type: String
         get() = InputMediaTypes.ANIMATION
@@ -91,7 +103,7 @@ data class InputMediaAudio(
     @SerializedName(InputMediaFields.THUMB) val thumb: TelegramFile.ByFile? = null,
     @SerializedName(InputMediaFields.DURATION) val duration: Int? = null,
     @SerializedName(InputMediaFields.PERFORMER) val performer: String? = null,
-    @SerializedName(InputMediaFields.TITLE) val title: String? = null
+    @SerializedName(InputMediaFields.TITLE) val title: String? = null,
 ) : InputMedia(), GroupableMedia {
     override val type: String
         get() = InputMediaTypes.AUDIO
@@ -105,7 +117,7 @@ data class InputMediaDocument(
     @SerializedName(InputMediaFields.MEDIA) override val media: TelegramFile,
     @SerializedName(InputMediaFields.CAPTION) override val caption: String? = null,
     @SerializedName(InputMediaFields.PARSE_MODE) override val parseMode: String? = null,
-    @SerializedName(InputMediaFields.THUMB) val thumb: TelegramFile.ByFile? = null
+    @SerializedName(InputMediaFields.THUMB) val thumb: TelegramFile.ByFile? = null,
 ) : InputMedia(), GroupableMedia {
     override val type: String
         get() = InputMediaTypes.DOCUMENT

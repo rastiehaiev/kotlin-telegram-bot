@@ -1,25 +1,6 @@
 package com.github.kotlintelegrambot.network
 
-import com.github.kotlintelegrambot.entities.BotCommand
-import com.github.kotlintelegrambot.entities.Chat
-import com.github.kotlintelegrambot.entities.ChatAction
-import com.github.kotlintelegrambot.entities.ChatId
-import com.github.kotlintelegrambot.entities.ChatMember
-import com.github.kotlintelegrambot.entities.ChatPermissions
-import com.github.kotlintelegrambot.entities.InlineKeyboardMarkup
-import com.github.kotlintelegrambot.entities.Message
-import com.github.kotlintelegrambot.entities.MessageEntity
-import com.github.kotlintelegrambot.entities.MessageId
-import com.github.kotlintelegrambot.entities.ParseMode
-import com.github.kotlintelegrambot.entities.ReplyMarkup
-import com.github.kotlintelegrambot.entities.TelegramFile
-import com.github.kotlintelegrambot.entities.TelegramFile.ByFile
-import com.github.kotlintelegrambot.entities.TelegramFile.ByFileId
-import com.github.kotlintelegrambot.entities.TelegramFile.ByUrl
-import com.github.kotlintelegrambot.entities.Update
-import com.github.kotlintelegrambot.entities.User
-import com.github.kotlintelegrambot.entities.UserProfilePhotos
-import com.github.kotlintelegrambot.entities.WebhookInfo
+import com.github.kotlintelegrambot.entities.*
 import com.github.kotlintelegrambot.entities.dice.DiceEmoji
 import com.github.kotlintelegrambot.entities.files.File
 import com.github.kotlintelegrambot.entities.inlinequeryresults.InlineQueryResult
@@ -42,11 +23,7 @@ import com.github.kotlintelegrambot.network.serialization.GsonFactory
 import com.github.kotlintelegrambot.types.TelegramBotResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -156,19 +133,19 @@ internal class ApiClient(
         maxConnections: Int? = null,
         allowedUpdates: List<String>? = null
     ): Call<Response<Boolean>> = when (certificate) {
-        is ByFileId -> service.setWebhookWithCertificateAsFileId(
+        is TelegramFile.ByFileId -> service.setWebhookWithCertificateAsFileId(
             url = url,
             certificateFileId = certificate.fileId,
             maxConnections = maxConnections,
             allowedUpdates = allowedUpdates
         )
-        is ByUrl -> service.setWebhookWithCertificateAsFileUrl(
+        is TelegramFile.ByUrl -> service.setWebhookWithCertificateAsFileUrl(
             url = url,
             certificateUrl = certificate.url,
             maxConnections = maxConnections,
             allowedUpdates = allowedUpdates
         )
-        is ByFile -> service.setWebhookWithCertificateAsFile(
+        is TelegramFile.ByFile -> service.setWebhookWithCertificateAsFile(
             url = url.toMultipartBodyPart(ApiConstants.SetWebhook.URL),
             certificate = certificate.file.toMultipartBodyPart(
                 partName = ApiConstants.SetWebhook.CERTIFICATE,
@@ -1066,7 +1043,7 @@ internal class ApiClient(
             chatId,
             messageId,
             inlineMessageId,
-            gson.toJson(media),
+            media,
             replyMarkup
         )
     }
