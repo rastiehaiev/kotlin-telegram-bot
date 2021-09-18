@@ -1,19 +1,7 @@
 package com.github.kotlintelegrambot
 
 import com.github.kotlintelegrambot.dispatcher.Dispatcher
-import com.github.kotlintelegrambot.entities.BotCommand
-import com.github.kotlintelegrambot.entities.Chat
-import com.github.kotlintelegrambot.entities.ChatAction
-import com.github.kotlintelegrambot.entities.ChatId
-import com.github.kotlintelegrambot.entities.ChatMember
-import com.github.kotlintelegrambot.entities.ChatPermissions
-import com.github.kotlintelegrambot.entities.InlineKeyboardMarkup
-import com.github.kotlintelegrambot.entities.Message
-import com.github.kotlintelegrambot.entities.MessageEntity
-import com.github.kotlintelegrambot.entities.ParseMode
-import com.github.kotlintelegrambot.entities.ReplyMarkup
-import com.github.kotlintelegrambot.entities.TelegramFile
-import com.github.kotlintelegrambot.entities.Update
+import com.github.kotlintelegrambot.entities.*
 import com.github.kotlintelegrambot.entities.dice.DiceEmoji
 import com.github.kotlintelegrambot.entities.inlinequeryresults.InlineQueryResult
 import com.github.kotlintelegrambot.entities.inputmedia.InputMedia
@@ -1616,8 +1604,9 @@ class Bot private constructor(
      * @return True on success.
      */
     fun setMyCommands(
+        languageCode: String?,
         commands: List<BotCommand>
-    ): TelegramBotResult<Boolean> = apiClient.setMyCommands(commands)
+    ): TelegramBotResult<Boolean> = apiClient.setMyCommands(languageCode, commands)
 
     /**
      * Use this method to send a dice, which will have a random value from 1 to 6.
