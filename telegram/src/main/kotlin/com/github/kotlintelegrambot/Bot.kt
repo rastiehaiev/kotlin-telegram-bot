@@ -1606,7 +1606,12 @@ class Bot private constructor(
     fun setMyCommands(
         languageCode: String?,
         commands: List<BotCommand>
-    ): TelegramBotResult<Boolean> = apiClient.setMyCommands(languageCode, commands)
+    ): TelegramBotResult<Boolean> {
+        if (languageCode != null) {
+            return apiClient.setMyCommands(languageCode, commands)
+        }
+        return apiClient.setMyCommands(commands)
+    }
 
     /**
      * Use this method to send a dice, which will have a random value from 1 to 6.

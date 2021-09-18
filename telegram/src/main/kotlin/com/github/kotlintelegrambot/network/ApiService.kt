@@ -813,7 +813,13 @@ internal interface ApiService {
     @POST("setMyCommands")
     fun setMyCommands(
         @Field("commands") commands: String,
-        @Field("language_code") languageCode: String?,
+    ): Call<Response<Boolean>>
+
+    @FormUrlEncoded
+    @POST("setMyCommands")
+    fun setMyCommands(
+        @Field("commands") commands: String,
+        @Field("language_code") languageCode: String,
     ): Call<Response<Boolean>>
 
     @FormUrlEncoded

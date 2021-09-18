@@ -1337,11 +1337,17 @@ internal class ApiClient(
     fun getMyCommands(): TelegramBotResult<List<BotCommand>> = service.getMyCommands().runApiOperation()
 
     fun setMyCommands(
-        languageCode: String?,
+        languageCode: String,
         commands: List<BotCommand>
     ): TelegramBotResult<Boolean> = service.setMyCommands(
         gson.toJson(commands),
         languageCode
+    ).runApiOperation()
+
+    fun setMyCommands(
+        commands: List<BotCommand>
+    ): TelegramBotResult<Boolean> = service.setMyCommands(
+        gson.toJson(commands),
     ).runApiOperation()
 
     fun sendDice(
