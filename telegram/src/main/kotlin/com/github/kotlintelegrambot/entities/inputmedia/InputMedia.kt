@@ -44,6 +44,16 @@ data class InputMediaPhoto(
 ) : InputMedia(), GroupableMedia {
     override val type: String
         get() = InputMediaTypes.PHOTO
+
+    override fun toString(): String {
+        return JsonObject().also {
+            val media = this.media
+            val fileId = media as? TelegramFile.ByFileId
+            val fileUrl = media as? TelegramFile.ByUrl
+            it.addProperty("media", fileId?.fileId ?: fileUrl?.url ?: "")
+            it.addProperty("type", type)
+        }.toString()
+    }
 }
 
 /**

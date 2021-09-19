@@ -61,7 +61,7 @@ publishing {
         gpr(MavenPublication) {
             group "com.github.kotlintelegrambot"
             artifactId "telegram"
-            version "6.0.14-SNAPSHOT"
+            version "6.0.15-SNAPSHOT"
             from components.java
         }
     }
