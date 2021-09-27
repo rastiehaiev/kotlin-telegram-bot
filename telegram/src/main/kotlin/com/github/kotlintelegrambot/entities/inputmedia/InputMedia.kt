@@ -52,6 +52,9 @@ data class InputMediaPhoto(
             val fileUrl = media as? TelegramFile.ByUrl
             it.addProperty("media", fileId?.fileId ?: fileUrl?.url ?: "")
             it.addProperty("type", type)
+            if (caption != null) {
+                it.addProperty("caption", caption)
+            }
         }.toString()
     }
 }
